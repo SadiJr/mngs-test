@@ -1,0 +1,59 @@
+server:
+  port: ${ERP_SERVER_PORT:8082}
+  compression.enabled: true
+  compression.mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+  tomcat.uri-encoding: UTF-8
+
+limit_trial_jonny: ${LIMITE_TRIAL_JONNY:1}  
+
+api:
+  #url: http://localhost:8080/api/empresa
+  url: https://api.asserttecnologia.com.br/v1/empresas
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${ERP_DATABASE_URL:localhost:3306}/dataone?serverTimezone=America/Sao_Paulo
+    username: ${ERP_DATABASE_USERNAME:root}
+    password: ${ERP_DATABASE_PASSWORD:root}
+  jpa:
+    generate-ddl: true
+    hibernate:
+      jdbc:
+        batch_size: 50000
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  jackson:
+    serialization:
+      indent_output: true
+      write_dates_as_timestamps: false
+
+erp-ws:
+  api:
+    user: ${ERP_WS_USER:admin}
+    password: ${ERP_WS_PASSWORD:123}
+    
+assert:
+  trial:
+    emails: marina.thomasi@asserttecnologia.com.br,carlos.goulart@asserttecnologia.com.br,amilton.santos@asserttecnologia.com.br,jaderson.berti@asserttecnologia.com.br
+  config:
+    wc: http://${WC_HOST:localhost}:8082/
+  api:
+    user: ${ERP_WS_USER:admin}
+    password: ${ERP_WS_PASSWORD:123}
+    receivers: simone.porfirio@asserttecnologia.com.br,vanessa.nandi@asserttecnologia.com.br,comercial@asserttecnologia.com.br
+    
+logging:
+  level:
+    org.apache.http: DEBUG
+    
+erp-request-configuration:
+  rest:
+    connection:
+      connection-request-timeout: 60000
+      connect-timeout: 60000
+      read-timeout: 60000       
